@@ -19,78 +19,25 @@
     </v-app-bar>
     <v-main>
       <v-container fluid>
-        <v-card
-          id="settings"
-          class="py-2 px-4"
-          flat
-          min-width="100"
-          style="
-            position: fixed;
-            top: 115px;
-            right: -35px;
-            border-radius: 8px;
-            z-index: 1;
-          "
-        >
-          <v-icon large v-text="'fas fa-cog'" />
-        </v-card>
-
-        <v-menu
-          v-model="menu"
-          :close-on-content-click="false"
-          activator="#settings"
-          bottom
-          content-class="v-settings"
-          left
-          nudge-left="8"
-          offset-x
-          origin="top right"
-          transition="scale-transition"
-        >
-          <v-card class="text-center mb-0" width="300">
-            <v-card-text>
-              <strong class="mb-3 d-inline-block">SIDEBAR FILTERS</strong>
-
-              <v-item-group v-model="color" mandatory>
-                <v-item v-for="color in colors" :key="color" :value="color">
-                  <template #default="{ active, toggle }">
-                    <v-avatar
-                      :class="active && 'v-settings__item--active'"
-                      :color="color"
-                      class="v-settings__item mx-1"
-                      size="25"
-                      @click="toggle"
-                    />
-                  </template>
-                </v-item>
-              </v-item-group>
-
-              <v-divider class="my-4 secondary" />
-            </v-card-text>
-          </v-card>
-        </v-menu>
+        <SettingsCog />
         <Nuxt />
       </v-container>
     </v-main>
-    <v-navigation-drawer v-model="rightDrawer" :right="right" temporary fixed>
-      <v-list>
-        <v-list-item @click.native="right = !right">
-          <v-list-item-action>
-            <v-icon light> mdi-repeat </v-icon>
-          </v-list-item-action>
-          <v-list-item-title>Switch drawer (click me)</v-list-item-title>
-        </v-list-item>
-      </v-list>
-    </v-navigation-drawer>
-    <v-footer :absolute="!fixed" app>
-      <span>&copy; {{ new Date().getFullYear() }}</span>
+    <!-- :absolute="!fixed" -->
+    <v-footer app>
+      <span class="d-flex justify-space-between" style="width: 100%">
+        <div v-text="$route.name ? 'Page: ' + $route.name : ''" />
+        <div v-text="title" />
+      </span>
     </v-footer>
   </v-app>
 </template>
 
 <script lang="ts">
+import SettingsCog from '~/components/SettingsCog.vue'
 export default {
   name: 'DefaultLayout',
+  components: { SettingsCog },
   data() {
     return {
       clipped: false,
@@ -111,7 +58,7 @@ export default {
       miniVariant: false,
       right: true,
       rightDrawer: false,
-      title: 'Vuetify.js',
+      title: 'WexproBI',
     }
   },
 }
